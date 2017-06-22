@@ -1,0 +1,248 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8" />
+	<title>Phaser - Making your first game, part 1</title>
+	<script type="text/javascript" src="js/phaser.min.js"></script>
+	
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding:0;
+            
+        }
+    </style>
+    
+    <meta name="viewport" content="initial-scale=1
+user-scalable=no" />
+   
+   
+    
+    
+</head>
+<body>
+
+<script type="text/javascript">
+
+var game = new Phaser.Game(2048, 1536, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+
+function preload() {
+    
+    //fondo
+    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    
+    //game.scale.setScreenSize( true );
+    
+    //this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+    
+    game.load.image('page1','assets/fondos/page1bg.png')
+    
+    //fin fondo
+    
+    
+    //imagenes de los monos
+    
+    game.load.image('sky', 'assets/sky.png');
+    game.load.image('ground', 'assets/platform.png');
+    game.load.image('star', 'assets/star.png');
+    game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+    game.load.image('beto', 'assets/beto00.png');
+    game.load.image('mati', 'assets/mati00.png');
+    game.load.image('fonomati', 'assets/tlf_mati.png')
+    game.load.image('samba', 'assets/samba00.png');
+    game.load.image('fonosamba', 'assets/tlf_samba.png');
+    game.load.image('paco', 'assets/paco00.png');
+    game.load.image('xavi', 'assets/xavi00.png');
+    game.load.image('pepe', 'assets/pepe00.png');
+    
+   // fin imagenes
+    
+    
+   // sonidos
+    
+    game.load.audio('betosonido', ['assets/sounds/beto1.mp3']);
+    
+   //fin sonidos
+    
+   
+    
+    
+    //animaciones
+    
+    
+    game.load.atlasJSONHash('betocall', 'assets/BetoCalling.png', 'assets/Betocalling.json');
+    game.load.atlasJSONHash('maticall', 'assets/mati.png', 'assets/mati.json');
+     
+    
+}
+
+//variables, una del mono idle y la otra del animado    
+    
+var beto;
+var betocall;
+var mati;
+var maticall;
+    
+function create() {
+    
+    //importando fisicas arcade, no se si sera realmente necesario
+    
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+    this.cursor = game.input.keyboard.createCursorKeys();
+	
+	
+    //fondo
+    
+    var page1 = game.add.sprite(0,0,'page1');
+    
+    page1.x = 0;
+    page1.y = 0;
+    page1.height = game.height;
+    page1.width = game.width;
+    
+    // fin fondo
+    
+    
+    //sonidos
+    
+    betosonido = game.add.audio('betosonido');
+    betosonido.addMarker('betosonido', 1, 1.0);
+    
+    //
+    
+    
+    
+  
+    
+    
+//betito
+    
+    
+    
+   var beto = game.add.sprite(700, 400, 'beto');
+    
+    
+    beto.scale.setTo(0.5, 0.5);
+    beto.inputEnabled = true;
+    beto.input.useHandCursor = true;
+    beto.events.onInputDown.add(clickeado, beto);
+    
+   
+    //game.input.onTap.add(changeTexture, this);
+
+    
+    //fin betito
+
+    
+    
+    //mati
+    
+    var mati = game.add.sprite(1200, 0, 'mati');
+    mati.scale.setTo(0.5, 0.5);
+    mati.inputEnabled = true;
+    mati.input.useHandCursor = true;
+    mati.events.onInputDown.add(clickeado, mati);
+    
+    //fin mati
+    
+    
+   var fonomati = game.add.sprite(1700, 320, 'fonomati');
+    fonomati.scale.setTo(0.6, 0.6);
+    
+    
+    
+    var samba = game.add.sprite(-100, 500, 'samba')
+    samba.scale.setTo(0.5, 0.5);
+    
+    var fonosamba = game.add.sprite(55, 1200, 'fonosamba')
+    fonosamba.scale.setTo(0.6,0.6);
+    
+    var pepe = game.add.sprite(800, 1000, 'pepe')
+    pepe.scale.setTo(0.5, 0.5);
+    
+    var xavi = game.add.sprite(-20, -170, 'xavi')
+    xavi.scale.setTo(0.5, 0.5);
+    
+     var paco = game.add.sprite(1200, 580, 'paco')
+    paco.scale.setTo(0.6, 0.6);
+    
+    
+    
+    //var monster = game.add.sprite(300, 200, 'monster');
+
+    //var walk = monster.animations.add('walk');
+    
+
+
+    //monster.animations.play('walk', 100, true);
+    
+    
+   /* betocall = game.add.sprite(700, 400, 'betocall');
+
+    betocall.animations.add('run');
+
+    betocall.animations.play('run', 24, true);
+    
+    betocall.scale.setTo(2,2); */
+
+    
+    
+}
+
+
+function clickeado(sprite){
+    
+    
+    
+    sprite.loadTexture('betocall', 0, false);
+    sprite.animations.add('betocall');
+    sprite.animations.play('betocall', 48, false);  // (name, frames, frameRate, loop)
+    sprite.scale.setTo(2, 2);
+    betosonido.play('betosonido');
+        
+  
+   
+    
+    // esto sirve para detenerla sprite.animations.stop();
+    
+    
+    sprite.loadTexture('maticall', 0, false);
+    sprite.animations.add('maticall');
+    sprite.animations.play('maticall', 48, false);  // (name, frames, frameRate, loop)
+    sprite.scale.setTo(2, 2);
+    
+       
+}
+    
+    
+function stopAnimation() {
+
+    //  This will just top the animation from running, freezing it at its current frame
+    // greenJellyfish.animations.stop();
+
+    //  This method will reset the frame to frame 1 after stopping
+    //beto.animations.stop(null, true)
+
+    sprite.animations.stop();
+
+}
+    
+
+
+
+
+    
+
+function update() {
+	
+
+
+	
+}
+
+
+
+</script>
+
+</body>
+</html>

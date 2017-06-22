@@ -1,0 +1,162 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8" />
+	<title>Phaser - Making your first game, part 1</title>
+	<script type="text/javascript" src="js/phaser.min.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding:0;
+            
+        }
+    </style>
+    
+    <meta name="viewport" content="initial-scale=1
+user-scalable=no" />
+    
+    
+</head>
+<body>
+
+<script type="text/javascript">
+
+var game = new Phaser.Game(2048, 1536, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+
+function preload() {
+    
+    //fondo
+    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;game.scale.setScreenSize( true );
+    game.load.image('page1','assets/fondos/page1bg.png')
+    
+    //fin fond
+    
+    
+    game.load.image('sky', 'assets/sky.png');
+    game.load.image('ground', 'assets/platform.png');
+    game.load.image('star', 'assets/star.png');
+    game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+    game.load.image('beto', 'assets/beto00.png');
+    game.load.image('mati', 'assets/mati00.png');
+    game.load.image('samba', 'assets/samba00.png');
+    game.load.image('paco', 'assets/paco00.png');
+    game.load.image('xavi', 'assets/xavi00.png');
+    game.load.image('pepe', 'assets/pepe00.png');
+    
+    game.load.spritesheet('monster', 'assets/metalslug_monster39x40.png', 39, 40, 16);
+    
+    
+    //animaciones
+    
+    
+     game.load.atlasJSONHash('betocall', 'assets/BetoCalling.png', 'assets/Betocalling.json');
+     
+    
+}
+
+    
+var beto;    
+    
+function create() {
+    
+    
+    //fondo
+    
+    var page1 = game.add.sprite(0,0,'page1');
+    
+    page1.x = 0;
+    page1.y = 0;
+    page1.height = game.height;
+    page1.width = game.width;
+    
+    // fin fondo
+    
+  
+    
+    
+//betito
+    
+    beto = game.add.sprite(700, 400, 'beto');
+    
+    beto.scale.setTo(0.5, 0.5);
+    
+    game.input.onTap.add(changeTexture, this);
+    
+   // beto.animations.stop(0, true);
+    
+    //fin betito
+
+    
+   var mati = game.add.sprite(1300, 80, 'mati');
+    mati.scale.setTo(0.5, 0.5);
+    
+    var samba = game.add.sprite(-100, 500, 'samba')
+    samba.scale.setTo(0.5, 0.5);
+    
+    var pepe = game.add.sprite(800, 1000, 'pepe')
+    pepe.scale.setTo(0.5, 0.5);
+    
+    var xavi = game.add.sprite(-20, -170, 'xavi')
+    xavi.scale.setTo(0.5, 0.5);
+    
+     var paco = game.add.sprite(1300, 750, 'paco')
+    paco.scale.setTo(0.5, 0.5);
+    
+    
+    
+    //var monster = game.add.sprite(300, 200, 'monster');
+
+    //var walk = monster.animations.add('walk');
+    
+
+
+    //monster.animations.play('walk', 100, true);
+    
+    
+   /* betocall = game.add.sprite(700, 400, 'betocall');
+
+    betocall.animations.add('run');
+
+    betocall.animations.play('run', 24, true);
+    
+    betocall.scale.setTo(2,2); */
+
+    
+    
+}
+    
+    
+    
+function changeTexture() {
+
+    if (beto.key === 'beto')
+    {
+        
+        beto.loadTexture('betocall', 0, false);
+        beto.animations.add('betocall');
+        beto.animations.play('betocall', 24, true);
+        beto.scale.setTo(2, 2);
+    }
+    else
+    {
+        beto.loadTexture('beto', 0, false);
+         beto.animations.stop(null, true);
+        beto.scale.setTo(0.5,0.5)
+        
+    }
+
+    // sprite.smoothed = false;
+
+}
+
+    
+    
+    
+
+function update() {
+}
+
+</script>
+
+</body>
+</html>
