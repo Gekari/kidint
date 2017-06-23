@@ -61,6 +61,7 @@ function preload() {
    // sonidos
     
     game.load.audio('betosonido', ['assets/sounds/beto1.mp3']);
+    game.load.audio('matisonido', ['assets/sounds/mati2.mp3']);
     
    //fin sonidos
     
@@ -107,6 +108,9 @@ function create() {
     
     betosonido = game.add.audio('betosonido');
     betosonido.addMarker('betosonido', 1, 1.0);
+    
+    matisonido = game.add.audio('matisonido');
+    matisonido.addMarker('matisonido', 0, 2.0);
     
     //
     
@@ -193,6 +197,8 @@ function create() {
 function clickeado(sprite){
     
     
+    if (sprite.key=='beto'){
+    
     
     sprite.loadTexture('betocall', 0, false);
     sprite.animations.add('betocall');
@@ -200,7 +206,9 @@ function clickeado(sprite){
     sprite.scale.setTo(2, 2);
     betosonido.play('betosonido');
         
-  
+    }
+    
+    if(sprite.key=='mati'){
    
     
     // esto sirve para detenerla sprite.animations.stop();
@@ -210,23 +218,13 @@ function clickeado(sprite){
     sprite.animations.add('maticall');
     sprite.animations.play('maticall', 48, false);  // (name, frames, frameRate, loop)
     sprite.scale.setTo(2, 2);
-    
+    matisonido.play('matisonido');
+    }
        
 }
     
     
-function stopAnimation() {
 
-    //  This will just top the animation from running, freezing it at its current frame
-    // greenJellyfish.animations.stop();
-
-    //  This method will reset the frame to frame 1 after stopping
-    //beto.animations.stop(null, true)
-
-    sprite.animations.stop();
-
-}
-    
 
 
 
@@ -235,6 +233,8 @@ function stopAnimation() {
 
 function update() {
 	
+    
+ 
 
 
 	
